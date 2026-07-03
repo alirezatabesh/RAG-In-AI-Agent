@@ -10,7 +10,38 @@ For this implementation, we'll use [LM Studio](https://lmstudio.ai/) - a powerfu
 
 Let me provide a bird's-eye view of what we're building (refer to the diagram below):
 
-![[Pasted image 20260702181603.png]]
+```mermaid
+architecture-beta
+
+group app(cloud)[C# .NET Application]
+
+service ui(server)[UI] in app
+service processor(server)[Processor] in app
+service vector(database)[Vector Memory] in app
+service embed(server)[Embedding Client] in app
+service llm(server)[LLM Client] in app
+service files(disk)[Text Files] in app
+
+group lm(cloud)[LM Studio]
+
+service api(server)[API] in lm
+service model(server)[LLM] in lm
+service embedding(server)[Embedding Model] in lm
+
+ui:R -- L:processor
+processor:R -- L:vector
+processor:R -- L:embed
+processor:R -- L:llm
+
+files:B -- T:embed
+files:B -- T:vector
+
+embed:R -- L:api
+llm:R -- L:api
+
+api:B -- T:model
+api:B -- T:embedding
+```
 
 When conversing with an LLM, we can provide it with pre-existing content to shape its responses. The standard chat completion API uses three roles:
 
