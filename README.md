@@ -11,36 +11,56 @@ For this implementation, we'll use [LM Studio](https://lmstudio.ai/) - a powerfu
 Let me provide a bird's-eye view of what we're building (refer to the diagram below):
 
 ```mermaid
-architecture-beta
+flowchart LR
 
-group app(cloud)[C# .NET Application]
+    User([User])
 
-service ui(server)[UI] in app
-service processor(server)[Processor] in app
-service vector(database)[Vector Memory] in app
-service embed(server)[Embedding Client] in app
-service llm(server)[LLM Client] in app
-service files(disk)[Text Files] in app
+    subgraph APP["C# .NET Application"]
 
-group lm(cloud)[LM Studio]
+        UI["UI"]
 
-service api(server)[API] in lm
-service model(server)[LLM] in lm
-service embedding(server)[Embedding Model] in lm
+        subgraph Core["Application Core"]
 
-ui:R -- L:processor
-processor:R -- L:vector
-processor:R -- L:embed
-processor:R -- L:llm
+            Files["Text Files<br/>(Books, Documents)"]
 
-files:B -- T:embed
-files:B -- T:vector
+            Processor["Processor"]
 
-embed:R -- L:api
-llm:R -- L:api
+            Vector["Vector Memory"]
 
-api:B -- T:model
-api:B -- T:embedding
+            Embed["Embedding HTTP Client"]
+
+            LLM["LLM HTTP Client"]
+
+            Files --> Embed
+            Files --> Vector
+
+            Processor --> Vector
+            Vector --> Processor
+
+            Processor --> Embed
+            Processor --> LLM
+
+            UI <--> Processor
+        end
+    end
+
+    subgraph LM["LM Studio"]
+
+        API["API"]
+
+        LLMModel["Large Language Model"]
+
+        EmbedModel["Embedding Model"]
+
+        API <--> LLMModel
+        API <--> EmbedModel
+    end
+
+    User -->|Send Request| UI
+    UI -->|Send Response| User
+
+    Embed <--> API
+    LLM <-->|Streaming Response| API
 ```
 
 When conversing with an LLM, we can provide it with pre-existing content to shape its responses. The standard chat completion API uses three roles:
