@@ -10,58 +10,7 @@ For this implementation, we'll use [LM Studio](https://lmstudio.ai/) - a powerfu
 
 Let me provide a bird's-eye view of what we're building (refer to the diagram below):
 
-```mermaid
-flowchart LR
-
-    User([User])
-
-    subgraph APP["C# .NET Application"]
-
-        UI["UI"]
-
-        subgraph Core["Application Core"]
-
-            Files["Text Files<br/>(Books, Documents)"]
-
-            Processor["Processor"]
-
-            Vector["Vector Memory"]
-
-            Embed["Embedding HTTP Client"]
-
-            LLM["LLM HTTP Client"]
-
-            Files --> Embed
-            Files --> Vector
-
-            Processor --> Vector
-            Vector --> Processor
-
-            Processor --> Embed
-            Processor --> LLM
-
-            UI <--> Processor
-        end
-    end
-
-    subgraph LM["LM Studio"]
-
-        API["API"]
-
-        LLMModel["Large Language Model"]
-
-        EmbedModel["Embedding Model"]
-
-        API <--> LLMModel
-        API <--> EmbedModel
-    end
-
-    User -->|Send Request| UI
-    UI -->|Send Response| User
-
-    Embed <--> API
-    LLM <-->|Streaming Response| API
-```
+![[https://github.com/alirezatabesh/RAG-In-AI-Agent/blob/main/.readme_images/RAG_LMStudio_CSharp.png]]
 
 When conversing with an LLM, we can provide it with pre-existing content to shape its responses. The standard chat completion API uses three roles:
 
