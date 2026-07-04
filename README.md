@@ -10,7 +10,7 @@ For this implementation, we'll use [LM Studio](https://lmstudio.ai/) - a powerfu
 
 Let me provide a bird's-eye view of what we're building (refer to the diagram below):
 
-![[RAG_AI_Diagram](github.com/alirezatabesh/RAG-In-AI-Agent/blob/main/.readme_images/RAG_LMStudio_CSharp.png?raw=true)]
+![RAG_AI_Diagram](github.com/alirezatabesh/RAG-In-AI-Agent/blob/main/.readme_images/RAG_LMStudio_CSharp.png?raw=true)
 
 When conversing with an LLM, we can provide it with pre-existing content to shape its responses. The standard chat completion API uses three roles:
 
