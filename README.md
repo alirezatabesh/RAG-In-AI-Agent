@@ -1,5 +1,7 @@
 # RAG with LM Studio and CSharp
 
+![RAG_AI_Banner](/.readme_images/RAG_LMStudio_CSharp_header.png)
+
 As someone who has been a C# .NET developer for years, I wanted to explore Retrieval-Augmented Generation (RAG) while staying within my comfort zone. While most AI development tends to happen in Python, I've chosen to implement the coding portions in C#. However, the core AI concepts remain universal regardless of the programming language.
 
 ## What We'll Need
