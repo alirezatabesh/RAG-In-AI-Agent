@@ -49,7 +49,5 @@ while (true)
     if (systemMessages.Count > 1)
         systemMessages.RemoveAt(1);
 
-    File.WriteAllText($"C:\\alireza\\ai-response{Guid.NewGuid()}.md", assistantResponse);
-
     Console.WriteLine("\r\n");
 }

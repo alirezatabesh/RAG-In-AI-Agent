@@ -10,8 +10,8 @@ namespace AiAgentSample
 
         public AgentInitializer()
         {
-            _llm = new LlmService("google/gemma-4-e4b", "http://127.0.0.1:3000");
-            _vector = new VectorService("text-embedding-nomic-embed-text-v1.5", "http://127.0.0.1:3000");
+            _llm = new LlmService("phi4-mini:latest", "http://127.0.0.1:11434");
+            _vector = new VectorService("phi4-mini:latest", "http://127.0.0.1:11434");
         }
 
         public LlmService GetLlmService()
@@ -26,6 +26,9 @@ namespace AiAgentSample
 
         public async Task PrepareVectorDatabase()
         {
+            if (!Directory.Exists("books"))
+                return;
+
             Console.WriteLine("***************************");
             var booksSubFolders = Directory.EnumerateDirectories("books");
             foreach (var book in booksSubFolders)
